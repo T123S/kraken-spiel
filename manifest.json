@@ -3,7 +3,7 @@
   "short_name": "Blaue Krake",
   "description": "Ein spannendes Unterwasser-Abenteuer. Schwimme, sprinte und weiche Hindernissen aus!",
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#001428",
   "theme_color": "#4488ff",
   "orientation": "landscape",

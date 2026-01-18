@@ -1,4 +1,4 @@
-const CACHE_NAME = 'krake-v3';
+const CACHE_NAME = 'krake-v4';
 const ASSETS = [
   './',
   './index.html',
