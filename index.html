@@ -8,7 +8,8 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192x192.png">
     
-    <title>Leonies Krakenspiel</title>
+    <title>Der blaue Krake</title>
+    # favicon ist manuell hinzugefpügt
 	<link rel="icon" type="image/png" href="icon-192.png">
     <style>
         body {
@@ -203,7 +204,8 @@
             <span class="label">Kraft (Sprint/Angriff)</span>
             <div class="bar-container"><div id="energy-fill" class="bar-fill"></div></div>
         </div>
-        <div id="desktop-hints">WASD: Schwimmen | Shift: Sprint | E: Schlag</div>
+        <!-- GEÄNDERT: Hinweis auf Leertaste aktualisiert -->
+        <div id="desktop-hints">WASD: Schwimmen | Shift: Sprint | Leertaste: Schlag</div>
     </div>
 
     <div id="top-center-ui">
@@ -235,7 +237,7 @@
     </div>
 
     <div id="menu-screen">
-        <h1>Das wilde Krakenabenteuer</h1>
+        <h1>Der Krake</h1>
         <p>Wähle deine Farbe:</p>
         <div id="color-selection">
             <div class="color-option selected" style="background: #4488ff;" data-color="#4488ff"></div> 
@@ -390,7 +392,8 @@
         let currentLevelIndex = 0;
         let currentLevel = LEVELS[0];
 
-        const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false, " ": false, e: false, Shift: false };
+        // GEÄNDERT: keys Objekt - 'e' entfernt, ' ' (Space) wird genutzt
+        const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false, " ": false, Shift: false };
         const mouse = { x: 0, y: 0, clicked: false };
 
         let player;
@@ -677,7 +680,9 @@
                 }
 
                 if (this.hitCooldown > 0) this.hitCooldown--;
-                if (keys.e || mouse.clicked) { this.attack(); mouse.clicked = false; keys.e = false; }
+                
+                // GEÄNDERT: keys.e durch keys[" "] (Leertaste) ersetzt
+                if (keys[" "] || mouse.clicked) { this.attack(); mouse.clicked = false; keys[" "] = false; }
             }
 
             victoryOrbit() {
@@ -945,7 +950,11 @@
                 joystickArea.addEventListener('touchstart', e => { e.preventDefault(); isTouchingJoystick = true; touchStart.x = e.touches[0].clientX; touchStart.y = e.touches[0].clientY; }, {passive: false});
                 joystickArea.addEventListener('touchmove', e => { e.preventDefault(); if(!isTouchingJoystick) return; let dx = e.touches[0].clientX - touchStart.x; let dy = e.touches[0].clientY - touchStart.y; let dist = Math.min(Math.hypot(dx, dy), 50); let angle = Math.atan2(dy, dx); joystickVector.x = (dx / 50); joystickVector.y = (dy / 50); stick.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`; }, {passive: false});
                 joystickArea.addEventListener('touchend', (e) => { e.preventDefault(); isTouchingJoystick = false; joystickVector = {x:0, y:0}; stick.style.transform = `translate(0px, 0px)`; });
-                btnAttack.addEventListener('touchstart', (e) => { e.preventDefault(); keys.e = true; }); btnAttack.addEventListener('touchend', (e) => { e.preventDefault(); keys.e = false; });
+                
+                // GEÄNDERT: Touch-Events setzen jetzt keys[" "] statt keys.e
+                btnAttack.addEventListener('touchstart', (e) => { e.preventDefault(); keys[" "] = true; }); 
+                btnAttack.addEventListener('touchend', (e) => { e.preventDefault(); keys[" "] = false; });
+                
                 btnSprint.addEventListener('touchstart', (e) => { e.preventDefault(); isTouchingSprint = true; }); btnSprint.addEventListener('touchend', (e) => { e.preventDefault(); isTouchingSprint = false; });
             }
             startBtn.addEventListener('click', () => { if (audioCtx.state === 'suspended') audioCtx.resume(); startGame(); }); 
