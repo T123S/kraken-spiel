@@ -1,4 +1,4 @@
-const CACHE_NAME = 'krake-v6';
+const CACHE_NAME = 'krake-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -31,5 +31,4 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request)
       .then((response) => response || fetch(event.request))
   );
-
 });
